@@ -47,9 +47,26 @@ require(['gitbook', 'jQuery'], function(gitbook, $) {
     }
 
     if (lines.length > 1) {
-      console.log(lines);
-      lines = lines.map(line => '<span class="code-line">' + line + '</span>');
-      console.log(lines);
+      var tagEnd = [];
+      var tagStart = [];
+      lines = lines.map(line => {
+        if(/^\s*<[a-zA-Z]+/.test(line)) {
+          if(!line.match(/<([a-zA-Z]+)(\s\w+=.+)*>.*?<\/\1>/)) {
+            var m = line.match(/<([a-zA-Z]+)?(\s\w+=.+)*>.*?/);
+            tagStart.push(m[0]);
+            tagEnd.push('</' + m[1] + '>');
+            line = line + tagEnd[tagEnd.length - 1];
+          }
+        } else {
+          if(/<\/[a-zA-Z]+>\s*$/.test(line)) {
+            tagEnd.pop();
+            line = (tagStart.pop() || '') + line;
+          } else {
+            line = (tagStart[tagStart.length - 1] || '') + line + (tagEnd[tagEnd.length - 1] || '');
+          }
+        }
+        return '<span class="code-line">' + line + '</span>';
+      });
       code.html(lines.join('\n'));
     }
 
