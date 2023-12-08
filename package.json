@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://github.com/davidmogar/gitbook-plugin-code",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "David Moreno-García",
     "email": "david.mogar@gmail.com"
