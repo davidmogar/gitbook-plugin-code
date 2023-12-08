@@ -47,9 +47,7 @@ require(['gitbook', 'jQuery'], function(gitbook, $) {
     }
 
     if (lines.length > 1) {
-      console.log(lines);
       lines = lines.map(line => '<span class="code-line">' + line + '</span>');
-      console.log(lines);
       code.html(lines.join('\n'));
     }
 
